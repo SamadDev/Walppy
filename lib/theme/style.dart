@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class AppTheme {
 
@@ -57,34 +55,34 @@ class AppTheme {
   );
 
   static final TextStyle _headline4 = TextStyle(
-    fontFamily: GoogleFonts.roboto().fontFamily,
     color: AppTheme.black1,
     fontWeight: FontWeight.w400,
+    fontFamily: 'nrt',
     fontSize: 18,
   );
   static final TextStyle _headline5 = TextStyle(
-    fontFamily: GoogleFonts.roboto().fontFamily,
+    fontFamily: 'nrt',
     color: AppTheme.green,
     fontWeight: FontWeight.w500,
     fontSize: 15,
   );
 
   static final TextStyle _button = TextStyle(
-    fontFamily: GoogleFonts.roboto().fontFamily,
+    fontFamily: 'nrt',
     color: AppTheme.white,
     fontWeight: FontWeight.w700,
     fontSize: 20,
   );
 
   static final TextStyle _subtitle1 = TextStyle(
-    fontFamily: GoogleFonts.roboto().fontFamily,
+    fontFamily: 'nrt',
     color: AppTheme.green,
     fontWeight: FontWeight.w400,
     fontSize: 14,
   );
 
   static final TextStyle _bodyText1 = TextStyle(
-    fontFamily: GoogleFonts.roboto().fontFamily,
+    fontFamily: 'nrt',
     color: AppTheme.black1,
     fontWeight: FontWeight.w400,
     fontSize: 15,

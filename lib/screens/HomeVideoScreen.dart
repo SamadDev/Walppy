@@ -1,6 +1,7 @@
+import 'package:new_wallpaper/Component/Sipnner.dart';
 import 'package:new_wallpaper/localization/language.dart';
 import 'package:new_wallpaper/module/Video.dart';
-import 'package:new_wallpaper/screens/DetailScreen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -17,7 +18,7 @@ class HomeVideoScreen extends StatelessWidget {
   HomeVideoScreen({this.category, required this.remove});
 
   Widget build(BuildContext context) {
-    int _index = 1;
+    int _index = 2;
     final data = Provider.of<Video>(context, listen: false);
     final language=Provider.of<Language>(context,listen:false);
     return Scaffold(
@@ -27,7 +28,7 @@ class HomeVideoScreen extends StatelessWidget {
           builder: (ctx, snap) =>
           snap.connectionState ==
               ConnectionState.waiting
-              ? Center(child: CircularProgressIndicator())
+              ? Spinner()
               : Consumer<Video>(
               builder: (ctx, video, _) =>
                   LazyLoadScrollView(
@@ -65,11 +66,15 @@ class HomeVideoScreen extends StatelessWidget {
                                       width: 10, color: AppTheme.black4)),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5),
-                                child: Image.network(
-                                  video.videoModule!.videos![i].videoPictures![6].picture.toString(),
-                                  fit: BoxFit.cover,
+                                child:CachedNetworkImage(imageUrl:
+                               video.videoModule!.videos![i].videoPictures![6].picture.toString(),
+                                  fit: BoxFit.fill,
+                                  placeholder:(ctx,snap)=> Opacity(
+                                      opacity: 0.1
+                                      ,child: Image.asset('assets/images/walpy.jpg',fit: BoxFit.cover)),
                                   // repeat: ImageRepeat.noRepeat,
-                                ),
+
+                                ) ,
                               ),
                             ),
                           ),
@@ -81,7 +86,11 @@ class HomeVideoScreen extends StatelessWidget {
 
 
 
-
+// Image.network(
+// video.videoModule!.videos![i].videoPictures![6].picture.toString(),
+// fit: BoxFit.cover,
+// // repeat: ImageRepeat.noRepeat,
+// )
 
 
 //                        GestureDetector(

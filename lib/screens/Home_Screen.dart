@@ -1,13 +1,14 @@
+import 'package:new_wallpaper/Component/Sipnner.dart';
 import 'package:new_wallpaper/localization/language.dart';
-import 'package:new_wallpaper/module/Video.dart';
 import 'package:new_wallpaper/screens/DetailScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:provider/provider.dart';
-import 'package:new_wallpaper/module/Pixel_module.dart';
+import 'package:new_wallpaper/module/Pixel.dart';
 import 'package:new_wallpaper/theme/style.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 
 
@@ -28,7 +29,7 @@ class HomeScreen extends StatelessWidget {
           builder: (ctx, snap) =>
           snap.connectionState ==
               ConnectionState.waiting
-              ? Center(child: CircularProgressIndicator())
+              ? Spinner()
               : Consumer<Pixel>(
               builder: (ctx, photo, _) =>
                   LazyLoadScrollView(
@@ -59,7 +60,7 @@ class HomeScreen extends StatelessWidget {
                                   builder: (ctx) =>
                                       DetailScreen(
                                         image: photo.module!.photos![i].src!
-                                            .large.toString(),)));
+                                            .large2x.toString(),)));
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -68,11 +69,15 @@ class HomeScreen extends StatelessWidget {
                                       width: 5, color: AppTheme.black4)),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5),
-                                child: Image.network(
-                                  photo.module!.photos![i].src!.large
-                                      .toString(),
-                                  fit: BoxFit.cover,
-                                  // repeat: ImageRepeat.noRepeat,
+                                  child: CachedNetworkImage(imageUrl:
+                                    photo.module!.photos![i].src!.medium
+                                        .toString(),
+                                    fit: BoxFit.cover,
+                                    placeholder:(ctx,snap)=> Opacity(
+                                   opacity: 0.1
+                                    ,child: Image.asset('assets/images/walpy.jpg',fit: BoxFit.cover)),
+                                    // repeat: ImageRepeat.noRepeat,
+
                                 ),
                               ),
                             ),

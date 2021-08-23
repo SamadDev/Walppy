@@ -1,27 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-// import 'package:wallpaper/Provider/DarkMode.dart';
-// import 'package:wallpaper/localization/language.dart';
-// import 'package:wallpaper/screens/PhotoTabBar.dart';
-//
-// class SplashScreen extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     Future<void>loadData()async{
-//     await Provider.of<Language>(context,listen:false).getLanguageDataInLocal();
-//     await  Provider.of<DarkThemePreference>(context,listen:false).getTheme();
-//     Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>Tab_Bar()));
-//     }
-//     return Scaffold(
-//       body: FutureBuilder(
-//         future: loadData(),
-//           builder: (ctx, snap) => snap.connectionState == ConnectionState.waiting
-//               ? CircularProgressIndicator()
-//               : CircularProgressIndicator()),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:new_wallpaper/Provider/DarkMode.dart';

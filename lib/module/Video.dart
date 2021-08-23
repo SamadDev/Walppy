@@ -32,7 +32,7 @@ class Video with ChangeNotifier {
       print("page$page");
       final response = await http.get(
           Uri.parse(
-              "https://api.pexels.com/videos/search?query='nature'&per_page=35&page=$page"),
+              "https://api.pexels.com/videos/search?query=$category&per_page=35&page=$page"),
           headers: {
             'Authorization':
                 'Bearer 563492ad6f917000010000018fe27b2e7b9749c7ab67dc5da14cf231'

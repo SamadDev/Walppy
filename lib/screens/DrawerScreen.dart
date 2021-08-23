@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:new_wallpaper/Component/LunchUrl.dart';
+import 'package:new_wallpaper/screens/AboutScreen.dart';
 import 'package:new_wallpaper/screens/FavoriteScreen.dart';
 import 'package:new_wallpaper/screens/HomeVideoScreen.dart';
 import 'package:new_wallpaper/screens/PhotoTabBar.dart';
@@ -20,14 +22,14 @@ class DrawerScreen extends StatelessWidget {
               Container(
                 color: Color(0xff008080),
                 margin: EdgeInsets.zero,
-                height: 230,width: double.infinity,
+                height: 230,
+                width: double.infinity,
                 child: DrawerHeader(
                     child: Image.asset(
                   'assets/images/walpy.jpg',
                   fit: BoxFit.cover,
                 )),
               ),
-
               setting(
                   icon: Icons.photo,
                   text: language.words['photo'],
@@ -44,8 +46,8 @@ class DrawerScreen extends StatelessWidget {
                   text: language.words['video'],
                   context: context,
                   function: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (ctx) => VideoTbaBAr()));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (ctx) => VideoTbaBAr()));
                   }),
               Divider(
                 color: Theme.of(context).buttonColor.withOpacity(0.1),
@@ -101,7 +103,8 @@ class DrawerScreen extends StatelessWidget {
                   context: context,
                   text: language.words['change mode'],
                   icon: Icons.nightlight_round,
-                  trailer: Consumer<DarkThemePreference>(builder: (ctx, mode, _) {
+                  trailer:
+                      Consumer<DarkThemePreference>(builder: (ctx, mode, _) {
                     Provider.of<DarkThemePreference>(context).getTheme();
                     print("${language.words['mode dark']}:${mode.darkTheme}");
                     var val = mode.darkTheme;
@@ -111,10 +114,36 @@ class DrawerScreen extends StatelessWidget {
                         onChanged: (value) {
                           print(value);
                           val = value;
-                          Provider.of<DarkThemePreference>(context, listen: false)
+                          Provider.of<DarkThemePreference>(context,
+                                  listen: false)
                               .setDarkTheme(value);
                         });
                   })),
+              Divider(
+                color: Theme.of(context).buttonColor.withOpacity(0.1),
+              ),
+              setting(
+                  icon: Icons.info_outline,
+                  text: language.words['about'],
+                  context: context,
+                  function: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (ctx) => AboutScreen()));
+                  }),
+              Divider(
+                color: Theme.of(context).buttonColor.withOpacity(0.1),
+              ),
+              setting(
+                  icon: Icons.bug_report_outlined,
+                  text: language.words['send problem'],
+                  context: context,
+                  function: () {
+                    launchURL(
+                        url: 'whatsapp://send?phone=+9647810520687',
+                        context: context,
+                        title: 'ۆڵپی');
+                  },
+                  )
             ],
           ),
         ),
@@ -122,6 +151,7 @@ class DrawerScreen extends StatelessWidget {
     );
   }
 }
+
 
 class _LanguageButton extends StatelessWidget {
   final String label;

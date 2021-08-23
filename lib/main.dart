@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:new_wallpaper/Provider/Favorite.dart';
-import 'package:new_wallpaper/screens/SplashScreen.dart';
+import 'package:new_wallpaper/Provider/PhotoFavorite.dart';
+import 'package:new_wallpaper/screens/SearchScreen.dart';
 import 'package:provider/provider.dart';
-import 'package:new_wallpaper/module/Pixel_module.dart';
+import 'package:new_wallpaper/module/Pixel.dart';
 import 'package:new_wallpaper/module/Video.dart';
 import 'package:new_wallpaper/theme/style.dart';
 import 'Provider/DarkMode.dart';
@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
           theme: theme.darkTheme == false
               ? AppTheme.darkTheme
               : AppTheme.lightTheme,
-          home: SplashScreen(),
+          home: SearchScreen(),
         );
       },
     );

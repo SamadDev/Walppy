@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_wallpaper/localization/language.dart';
 import 'package:new_wallpaper/screens/DrawerScreen.dart';
 import 'package:new_wallpaper/screens/HomeVideoScreen.dart';
+import 'package:new_wallpaper/theme/style.dart';
 import 'package:provider/provider.dart';
 
 class VideoTbaBAr extends StatelessWidget {
@@ -16,29 +17,41 @@ class VideoTbaBAr extends StatelessWidget {
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
                 new SliverAppBar(
-                  actions: [Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset('assets/images/search.png',width: 25,height: 2,color: Theme.of(context).buttonColor,),
-                  ),
+                  title: Text(language.words['video'],style: Theme.of(context).textTheme.bodyText1,),
+                  elevation: 0,
+                  toolbarHeight: 60,
+                  actions: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        'assets/images/s.png',
+                        color: Theme.of(context).buttonColor,
+                        width: 25,
+                      ),
+                    ),
                   ],
                   backgroundColor: Theme.of(context).cardColor,
-                  pinned: true,
-                  stretch: true,
-                  automaticallyImplyLeading: true,
-                  backwardsCompatibility: true,
-                  centerTitle: true,
-                  excludeHeaderSemantics: true,
                   forceElevated: true,
-
                   floating: true,
                   bottom: TabBar(
+                    labelStyle: Theme.of(context).textTheme.bodyText1,
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    indicator: ShapeDecoration(
+                        color: AppTheme.green,
+                        shape: BeveledRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            side: BorderSide(
+                              color: Theme.of(context).cardColor,
+                            ))),
                     onTap: (int) {},
                     isScrollable: true,
                     tabs: [
                       Tab(child: Text(language.words['all'])),
                       Tab(child: Text(language.words['nature'])),
                       Tab(child: Text(language.words['technology'])),
-                      Tab(child: Text(language.words['programing']),),
+                      Tab(
+                        child: Text(language.words['programing']),
+                      ),
                       Tab(child: Text(language.words['animal'])),
                       Tab(child: Text(language.words['fashion'])),
                       Tab(child: Text(language.words['baby'])),
@@ -47,7 +60,9 @@ class VideoTbaBAr extends StatelessWidget {
                       Tab(child: Text(language.words['flag'])),
                       Tab(child: Text(language.words['architecture'])),
                       Tab(child: Text(language.words['laptop'])),
-                      Tab(child: Text(language.words['programing']),),
+                      Tab(
+                        child: Text(language.words['programing']),
+                      ),
                       Tab(child: Text(language.words['health & wealth'])),
                       Tab(child: Text(language.words['culture'])),
                     ],

@@ -45,9 +45,10 @@ dev_dependencies:
   fluttertoast:
   share:
   shimmer:
-  flutter_cache_manager:
   video_player:
   chewie:
+  url_launcher:
+  cached_network_image:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -76,10 +77,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: nrt
+      fonts:
+        - asset: assets/fonts/NRT-Reg.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
