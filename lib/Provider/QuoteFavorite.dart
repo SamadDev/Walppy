@@ -1,35 +1,36 @@
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SLocalStorage with ChangeNotifier {
-  List<String> courseList = [];
+class FavQuote with ChangeNotifier {
+  List<String> quoteList = [];
 
-  Future<void> fetchLoveList() async {
+  Future<void> fetchQuote() async {
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
-      courseList = preferences.getStringList('course') ?? [];
+      quoteList = preferences.getStringList('quote') ?? [];
+      print(quoteList);
       notifyListeners();
     } catch (error) {
       print(error);
     }
   }
 
-  addToLoveList({photo}) async {
+  addQuote({quote}) async {
     try {
-      courseList.add(photo);
+      quoteList.add(quote);
       SharedPreferences preferences = await SharedPreferences.getInstance();
-      preferences.setStringList('course', courseList);
+      preferences.setStringList('quote', quoteList);
       notifyListeners();
     } catch (error) {
       print(error);
     }
   }
 
-  removeCourse({url}) async {
+  removeQuote({quote}) async {
     try {
-      courseList.removeAt(courseList.indexOf(url));
+      quoteList.removeAt(quoteList.indexOf(quote));
       SharedPreferences preferences = await SharedPreferences.getInstance();
-      preferences.setStringList('course', courseList);
+      preferences.setStringList('quote', quoteList);
       notifyListeners();
     } catch (error) {
       print(error);

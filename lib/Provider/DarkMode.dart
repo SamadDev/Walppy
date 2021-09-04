@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DarkThemePreference extends ChangeNotifier {
-  bool _darkTheme = false;
+  bool _darkTheme = true;
 
   bool get darkTheme => _darkTheme;
 

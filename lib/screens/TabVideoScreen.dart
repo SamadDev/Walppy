@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_wallpaper/localization/language.dart';
 import 'package:new_wallpaper/screens/DrawerScreen.dart';
 import 'package:new_wallpaper/screens/HomeVideoScreen.dart';
+import 'package:new_wallpaper/screens/SearchVideoScreen.dart';
 import 'package:new_wallpaper/theme/style.dart';
 import 'package:provider/provider.dart';
 
@@ -9,10 +10,12 @@ class VideoTbaBAr extends StatelessWidget {
   Widget build(BuildContext context) {
     final language = Provider.of<Language>(context, listen: false);
     return DefaultTabController(
-      length: 15,
+      length:17,
       child: Scaffold(
           drawer: DrawerScreen(),
           body: NestedScrollView(
+            floatHeaderSlivers: true,
+            physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
@@ -21,12 +24,17 @@ class VideoTbaBAr extends StatelessWidget {
                   elevation: 0,
                   toolbarHeight: 60,
                   actions: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.asset(
-                        'assets/images/s.png',
-                        color: Theme.of(context).buttonColor,
-                        width: 25,
+                    TextButton(
+                      onPressed: (){
+                        Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>SearchVideo()));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.asset(
+                          'assets/images/s.png',
+                          color: Theme.of(context).buttonColor,
+                          width: 25,
+                        ),
                       ),
                     ),
                   ],
@@ -34,6 +42,7 @@ class VideoTbaBAr extends StatelessWidget {
                   forceElevated: true,
                   floating: true,
                   bottom: TabBar(
+                    physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                     labelStyle: Theme.of(context).textTheme.bodyText1,
                     indicatorSize: TabBarIndicatorSize.tab,
                     indicator: ShapeDecoration(
@@ -47,6 +56,8 @@ class VideoTbaBAr extends StatelessWidget {
                     isScrollable: true,
                     tabs: [
                       Tab(child: Text(language.words['all'])),
+                      Tab(child: Text(language.words['funny'])),
+                      Tab(child: Text(language.words['game'])),
                       Tab(child: Text(language.words['nature'])),
                       Tab(child: Text(language.words['technology'])),
                       Tab(
@@ -73,6 +84,8 @@ class VideoTbaBAr extends StatelessWidget {
             body: TabBarView(
               children: <Widget>[
                 HomeVideoScreen(remove: false, category: 'all'),
+                HomeVideoScreen(remove: false, category: 'funny'),
+                HomeVideoScreen(remove: false, category: 'game'),
                 HomeVideoScreen(remove: false, category: 'nature'),
                 HomeVideoScreen(remove: false, category: 'technology'),
                 HomeVideoScreen(remove: false, category: 'programing',),

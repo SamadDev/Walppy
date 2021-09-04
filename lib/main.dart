@@ -1,22 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_wallpaper/Provider/PhotoFavorite.dart';
-import 'package:new_wallpaper/screens/SearchScreen.dart';
+import 'package:new_wallpaper/Provider/Quote.dart';
+import 'package:new_wallpaper/Provider/QuoteFavorite.dart';
+import 'package:new_wallpaper/Provider/ShowToolTip.dart';
+import 'package:new_wallpaper/Provider/VideoFavorite.dart';
+import 'package:new_wallpaper/Component/ErrorScreen.dart';
+import 'package:new_wallpaper/screens/SplashScreen.dart';
 import 'package:provider/provider.dart';
-import 'package:new_wallpaper/module/Pixel.dart';
-import 'package:new_wallpaper/module/Video.dart';
+import 'package:new_wallpaper/Provider/Photo.dart';
+import 'package:new_wallpaper/Provider/Video.dart';
 import 'package:new_wallpaper/theme/style.dart';
 import 'Provider/DarkMode.dart';
 import 'localization/language.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 
-
-
-
-void main()async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await FlutterDownloader.initialize(
-      debug: true // optional: set false to disable printing logs to console
+  await FlutterDownloader.initialize(debug: true);
+  ErrorWidget.builder = (ctx) => Scaffold(
+    body: ErrorScreen(),
   );
   runApp(ProviderWidget());
 }
@@ -27,11 +30,16 @@ class ProviderWidget extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Language()),
-        ChangeNotifierProvider(create: (_)=>Video(),),
-        ChangeNotifierProvider(create: (_)=>SLocalStorage()),
+        ChangeNotifierProvider(create: (_) => Video()),
+        ChangeNotifierProvider(create: (_) => SLocalStorage()),
         ChangeNotifierProvider(create: (_) => DarkThemePreference()),
+        ChangeNotifierProvider(create: (_)=>IsShow(),),
+        ChangeNotifierProvider(create: (_)=>Quote(),),
+        ChangeNotifierProvider(create: (_)=>FavQuote(),),
         ChangeNotifierProvider(create: (_) => Pixel()),
-        ChangeNotifierProvider(create: (_) => Video())
+        ChangeNotifierProvider(
+          create: (_) => LocalVideoFav(),
+        )
       ],
       child: MyApp(),
     );
@@ -53,10 +61,8 @@ class _MyAppState extends State<MyApp> {
         return MaterialApp(
           builder: (ctx, child) {
             return Directionality(
-              textDirection:
-              language.languageCode == 'en'
-                  ?
-              TextDirection.ltr
+              textDirection: language.languageCode == 'en'
+                  ? TextDirection.ltr
                   : TextDirection.rtl,
               child: child!,
             );
@@ -65,15 +71,9 @@ class _MyAppState extends State<MyApp> {
           theme: theme.darkTheme == false
               ? AppTheme.darkTheme
               : AppTheme.lightTheme,
-          home: SearchScreen(),
+          home: SplashScreen(),
         );
       },
     );
   }
-
-
 }
-
-
-
-

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_wallpaper/Component/LunchUrl.dart';
 import 'package:new_wallpaper/screens/AboutScreen.dart';
-import 'package:new_wallpaper/screens/FavoriteScreen.dart';
-import 'package:new_wallpaper/screens/HomeVideoScreen.dart';
-import 'package:new_wallpaper/screens/PhotoTabBar.dart';
-import 'package:new_wallpaper/screens/VideTAbBar.dart';
+import 'package:new_wallpaper/screens/TabFavorite.dart';
+import 'package:new_wallpaper/screens/TabPhotoScreen.dart';
+import 'package:new_wallpaper/screens/TabQuoteScreen.dart';
+import 'package:new_wallpaper/screens/TabVideoScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:new_wallpaper/theme/style.dart';
 
@@ -49,27 +49,26 @@ class DrawerScreen extends StatelessWidget {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (ctx) => VideoTbaBAr()));
                   }),
-              Divider(
-                color: Theme.of(context).buttonColor.withOpacity(0.1),
-              ),
               setting(
-                  icon: Icons.favorite,
-                  text: language.words['favorite video'],
+                  icon: Icons.format_quote,
+                  text: language.words['quote'],
                   context: context,
                   function: () {
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (ctx) => FavoriteScreen()));
+                        MaterialPageRoute(builder: (ctx) => TabBarQuote()));
                   }),
+
               Divider(
                 color: Theme.of(context).buttonColor.withOpacity(0.1),
               ),
+
               setting(
                   icon: Icons.favorite,
-                  text: language.words['favorite photo'],
+                  text: language.words['favorite'],
                   context: context,
                   function: () {
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (ctx) => FavoriteScreen()));
+                        MaterialPageRoute(builder: (ctx) => TabFavorite()));
                   }),
               Divider(
                 color: Theme.of(context).buttonColor.withOpacity(0.1),
@@ -106,13 +105,11 @@ class DrawerScreen extends StatelessWidget {
                   trailer:
                       Consumer<DarkThemePreference>(builder: (ctx, mode, _) {
                     Provider.of<DarkThemePreference>(context).getTheme();
-                    print("${language.words['mode dark']}:${mode.darkTheme}");
                     var val = mode.darkTheme;
                     return Switch(
                         activeColor: AppTheme.green,
                         value: val,
                         onChanged: (value) {
-                          print(value);
                           val = value;
                           Provider.of<DarkThemePreference>(context,
                                   listen: false)

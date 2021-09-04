@@ -5,7 +5,6 @@ launchURL({ url,  context,  title}) async {
   if (await canLaunch(url,)) {
     await launch(url);
   } else {
-    print('Could not launch $url');
     showDialog(
       context: context,
       builder: (context) => AlertDialog(

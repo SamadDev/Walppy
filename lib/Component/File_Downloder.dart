@@ -7,11 +7,13 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
 import 'package:provider/provider.dart';
-
+import 'package:permission_handler/permission_handler.dart';
 
 class FileDownloadWidget extends StatefulWidget {
   final url;
+
   FileDownloadWidget({this.url});
+
   _FileDownloadWidgetState createState() => _FileDownloadWidgetState();
 }
 
@@ -27,12 +29,13 @@ class _FileDownloadWidgetState extends State<FileDownloadWidget> {
   static void downloadCallback(
       String id, DownloadTaskStatus status, int progress) {
     final SendPort? send =
-    IsolateNameServer.lookupPortByName('downloader_send_port');
+        IsolateNameServer.lookupPortByName('downloader_send_port');
     send!.send([id, status, progress]);
   }
 
   _downloadListener() {
-    IsolateNameServer.registerPortWithName(_port.sendPort, 'downloader_send_port');
+    IsolateNameServer.registerPortWithName(
+        _port.sendPort, 'downloader_send_port');
     _port.listen((dynamic data) {
       String id = data[0];
       DownloadTaskStatus status = data[1];
@@ -46,35 +49,44 @@ class _FileDownloadWidgetState extends State<FileDownloadWidget> {
     });
     FlutterDownloader.registerCallback(downloadCallback);
   }
+
   void _download() async {
-    String _localPath =
-        (await findLocalPath()) + Platform.pathSeparator + 'Example_Downloads';
-
-    final savedDir = Directory(_localPath);
-    bool hasExisted = await savedDir.exists();
-    if (!hasExisted) {
-      savedDir.create();
+    final status = await Permission.storage.request();
+    if (status.isGranted) {
+      String _localPath = (await findLocalPath()) +
+          Platform.pathSeparator +
+          'Example_Downloads';
+      final savedDir = Directory(_localPath);
+      bool hasExisted = await savedDir.exists();
+      if (!hasExisted) {
+        savedDir.create();
+      }
+      await FlutterDownloader.enqueue(
+        url: widget.url,
+        savedDir: _localPath,
+        showNotification: true,
+        openFileFromNotification: true,
+      );
     }
-
-    await FlutterDownloader.enqueue(
-      url: widget.url,
-      savedDir: _localPath,
-      showNotification: true,
-      openFileFromNotification: true,
-    );
   }
 
   Future<String> findLocalPath() async {
-    final directory =
-    await getExternalStorageDirectory();
+    final directory = await getExternalStorageDirectory();
     return directory!.path;
   }
 
   @override
   Widget build(BuildContext context) {
-    final language=Provider.of<Language>(context,listen:false);
-    return DetailIcon(onTap: _download, text: language.words['download'],
-      icon: Icon(Icons.download_sharp,        size: 30,
-        color: Colors.grey[300],),bgColor: Colors.grey,);
+    final language = Provider.of<Language>(context, listen: false);
+    return DetailIcon(
+      onTap: _download,
+      text: language.words['download'],
+      icon: Icon(
+        Icons.download_sharp,
+        size: 30,
+        color: Colors.grey[300],
+      ),
+      bgColor: Colors.grey,
+    );
   }
 }
